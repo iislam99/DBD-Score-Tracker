@@ -1,0 +1,6 @@
+__pycache__/
+.vscode/
+env/
+assets/teams/*.txt
+assets/images/temp/*.png
+test_*.py
