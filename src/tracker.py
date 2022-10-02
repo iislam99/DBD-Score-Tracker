@@ -77,7 +77,7 @@ class DBD_Score_Tracker:
                 except:
                     print("File not found.")
             else:
-                "Invalid input. Press M or F, then hit enter."
+                print("Invalid input. Press M or F, then hit enter.")
         
         self._lastScores = self._players
         print("\nPlayers Identified")
