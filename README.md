@@ -1,7 +1,9 @@
 # Dead by Daylight Score Tracker
 Score tracker for the Dead by Daylight video game. Scores for your current gaming session are sent to Discord.
 
-**NOTE:** Only works on displays with a resolution of 1920 x 1080. If you want it to work on a different display, you will need to determine the locations of all player information yourself and update `generatePlayerScreenshots()` in `src/scoreboard.py` accordingly.
+## NOTE
+
+Only works with default DBD graphics/video/text settings and on displays with a resolution of 1920 x 1080. If you want it to work on a different display, you will need to determine the locations of all player information on the screen yourself and update `generatePlayerScreenshots()` in `src/scoreboard.py` accordingly.
 
 ## Setup
 - Install Python 3
