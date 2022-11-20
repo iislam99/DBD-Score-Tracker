@@ -57,7 +57,7 @@ class DBD_Score_Tracker:
                     
                     self._players.append(p)
                 
-                self._teamName = input("What would you like to name this team? ")
+                self._teamName = input("\nWhat would you like to name this team? ")
                 with open (f"assets/teams/{self._teamName}.txt", 'w') as f:
                     for p in self._players:
                         f.write(p.name + '=' + p.username + '\n')
@@ -77,7 +77,7 @@ class DBD_Score_Tracker:
                 except:
                     print("File not found.")
             else:
-                "Invalid input. Press M or F, then hit enter."
+                print("Invalid input. Press M or F, then hit enter.")
         
         self._lastScores = self._players
         print("\nPlayers Identified")
