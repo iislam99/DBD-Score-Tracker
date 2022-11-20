@@ -15,6 +15,7 @@ killerList = [
     "hag",
     "hillbilly",
     "huntress",
+    "knight",
     "legion",
     "mastermind",
     "nemesis",
