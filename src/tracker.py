@@ -114,6 +114,6 @@ class DBD_Score_Tracker:
         with keyboard.Listener(on_release=self.on_release) as listener:
             try:
                 listener.join()
-                print("Program completed execution.")
+                print("\nProgram completed execution.")
             except Exception as e:
                 print(f"ERROR: {e}")
