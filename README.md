@@ -52,3 +52,6 @@ Press F9 on the scoreboard screen.
 Press F10 to finish using the tracker and send the final scores to Discord.
 
 ![image](https://user-images.githubusercontent.com/42816266/192916227-6929be78-139f-4ad7-85bf-248d10418f5b.png)
+
+## Known Issues
+- If a party member disconnects from the match, this is meant to be treated as a loss. However, the loss counts do not go up despite the tracker not observing the "escaped" symbol on the scoreboard screen.
