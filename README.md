@@ -55,3 +55,7 @@ Press F10 to finish using the tracker and send the final scores to Discord.
 
 ## Known Issues
 - If a party member disconnects from the match, this is meant to be treated as a loss. However, the loss counts do not go up despite the tracker not observing the "escaped" symbol on the scoreboard screen.
+
+## Plans for the Future
+- Ask for Discord server hook URL during team setup. Allows different teams to have different servers.
+- Add support for 2560 x 1440 monitors.
