@@ -26,6 +26,7 @@ killerList = [
     "pig",
     "plague",
     "shape",
+    "skull merchant",
     "spirit",
     "trapper",
     "trickster",
