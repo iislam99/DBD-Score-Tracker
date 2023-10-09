@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import datetime
 from pynput import keyboard
 
@@ -15,6 +16,7 @@ class DBD_Score_Tracker:
         self._teamName = ""
         self._sessionStart = datetime.now()
         self._lastScores = []
+        self._hookUrl = ""
 
         if not os.path.exists("assets/teams"):
             os.mkdir("assets/teams")
@@ -29,15 +31,13 @@ class DBD_Score_Tracker:
             if resp == 'm':
                 while True:
                     numPlayers = input("\nHow many players are there (1-4)? ")
-                    if numPlayers == '' or any(not c.isdigit() for c in numPlayers):
-                        print("Invalid input. Input a number from 1-4.")
-                    else:
+                    pattern = r'^[1-4]$'
+                    if re.match(pattern, numPlayers):
                         numPlayers = int(numPlayers)
-                        if 1 <= numPlayers <= 4:
-                            break
-                        else:
-                            print("This value is out of range.")
-                
+                        break
+                    else:
+                        print("Invalid input. Input a number from 1-4.")
+
                 for i in range(numPlayers):
                     p = Player()
                     
@@ -58,9 +58,19 @@ class DBD_Score_Tracker:
                     self._players.append(p)
                 
                 self._teamName = input("\nWhat would you like to name this team? ")
+
+                while True:
+                    self._hookUrl = input("\nPlease input the Discord Webhook URL for the Discord server channel you want to receive score updates:\n")
+                    pattern = r'^https://discord.com/api/webhooks/\d+/[A-Za-z0-9_-]+$'
+                    if re.match(pattern, self._hookUrl):
+                        break
+                    else:
+                        print("Invalid URL provided.")
+                
                 with open (f"assets/teams/{self._teamName}.txt", 'w') as f:
                     for p in self._players:
-                        f.write(p.name + '=' + p.username + '\n')
+                        f.write(f"{p.name}={p.username}\n")
+                    f.write(f"DISCORD_WEBHOOK={self._hookUrl}\n")
                 print(f"\nUse team name '{self._teamName}' to access this team next time.")
 
                 break
@@ -71,8 +81,11 @@ class DBD_Score_Tracker:
                         f = file.read().splitlines()
                         for line in f:
                             line.rstrip('\n')
-                            name, username = line.split('=')
-                            self._players.append(Player(name, username))
+                            key, val = line.split('=')
+                            if key is not 'DISCORD_WEBHOOK':
+                                self._players.append(Player(key, val))
+                            else:
+                                self._hookUrl = val
                     break
                 except:
                     print("File not found.")
@@ -85,7 +98,7 @@ class DBD_Score_Tracker:
         for p in self._players:
             print(p.name, '-', p.username)
         
-        welcomeMessage(self._players, self._teamName, self._sessionStart)
+        welcomeMessage(self._players, self._teamName, self._sessionStart, self._hookUrl)
 
 
     def on_release(self, key):
@@ -93,15 +106,15 @@ class DBD_Score_Tracker:
 
         if key == keyboard.Key.f9:
             # Get data from screenshots and send it to Discord
-            if getScoreData(self._players, self._teamName) == 0:
-                sendGameData(self._players, self._teamName)
+            if getScoreData(self._players, self._teamName, self._hookUrl) == 0:
+                sendGameData(self._players, self._teamName, self._hookUrl)
                 self._lastScores = self._players
             else:
                 self._players = self._lastScores
         
         if key == keyboard.Key.f10:
             # End key listener
-            finalScores(self._players, self._teamName, self._sessionStart)
+            finalScores(self._players, self._teamName, self._sessionStart, self._hookUrl)
             return False
 
 

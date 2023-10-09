@@ -3,12 +3,11 @@ from datetime import datetime
 
 from scoreboard import identifyKiller
 
-HOOK_URL = ""
 
-def welcomeMessage(players, teamName, start):
+def welcomeMessage(players, teamName, start, hookUrl):
     """Send welcome message to Discord."""
    
-    hook = DiscordWebhook(url=HOOK_URL)
+    hook = DiscordWebhook(url=hookUrl)
 
     embed = DiscordEmbed(
         title=teamName,
@@ -39,10 +38,10 @@ def welcomeMessage(players, teamName, start):
     hook.execute()
 
 
-def finalScores(players, teamName, start):
+def finalScores(players, teamName, start, hookUrl):
     """Send final scores to Discord."""
     
-    hook = DiscordWebhook(url=HOOK_URL)
+    hook = DiscordWebhook(url=hookUrl)
     players.sort(key=lambda p: (p.wins, p.points), reverse=True)
     
     embed = DiscordEmbed(
@@ -74,10 +73,10 @@ def finalScores(players, teamName, start):
     hook.execute()
 
 
-def sendGameData(players, teamName):
+def sendGameData(players, teamName, hookUrl):
     """Send updated game data to Discord."""
 
-    hook = DiscordWebhook(url=HOOK_URL)
+    hook = DiscordWebhook(url=hookUrl)
     players.sort(key=lambda p: (p.wins, p.points), reverse=True)
     killer = identifyKiller("assets/images/temp")
     killerName = 'The ' + killer.title()
@@ -123,10 +122,10 @@ def sendGameData(players, teamName):
     hook.execute()
 
 
-def sendError(teamName, message="An error has occurred."):
+def sendError(teamName, hookUrl, message="An error has occurred."):
     """Send error message to Discord."""
     
-    hook = DiscordWebhook(url=HOOK_URL)
+    hook = DiscordWebhook(url=hookUrl)
 
     embed = DiscordEmbed(
         title=teamName,
